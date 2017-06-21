@@ -3,7 +3,7 @@
 import { configure } from '@storybook/react';
 
 function loadStories() {
-  require('../src/stories/ecmascript6');
+  require('../src/stories');
 }
 
 configure(loadStories, module);
