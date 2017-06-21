@@ -1,2 +1,4 @@
 
-require('./101_ecmascript6');
+require('./ecmascript6');
+require('./react');
+require('./react-router');
