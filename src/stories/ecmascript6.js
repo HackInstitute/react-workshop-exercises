@@ -48,7 +48,7 @@ story.add('var summe', () => {
   return <div>{ sum }</div>;
 });
 
-story.add('var hosting fehler', () => {
+story.add('var hoisting fehler', () => {
   const lazy = [];
 
   var sum = 0;
