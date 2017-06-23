@@ -464,3 +464,24 @@ story.add('Classes with extends/super', () => {
 
   return <div>{ point3d.toString() }</div>;
 });
+
+story.add('Truthy null-check', () => {
+  const user = {
+    address: {
+      city: 'Köln',
+    },
+  };
+
+  const city = user && user.address && user.address.city;
+
+  return <div>{ city }</div>;
+});
+
+story.add('Falsey null-check', () => {
+  const user = {
+  };
+
+  const city = user && user.address && user.address.city || 'Unbekannt';
+
+  return <div>{ city }</div>;
+});

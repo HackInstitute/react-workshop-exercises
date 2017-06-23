@@ -6,7 +6,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-const story = storiesOf('react', module);
+const story = storiesOf('react class components', module);
 
 story.add('Hello world', () => {
   return (
