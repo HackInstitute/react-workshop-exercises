@@ -35,7 +35,6 @@ class SomeComponent extends React.Component {
   }
 }
 
-
 // const element = <div className="example">Almost like a DOM element</div>
 
 // const element = (
@@ -52,6 +51,12 @@ class SomeComponent extends React.Component {
 // React.createElement(arguments)
 // <...>marked it up</...>
 
+
+
+{/*<div> { if(true) { <div>some conditional text</div> } } </div>*/}
+// { shouldShow && <div>conditional content</div> }
+
+// { redPill ? <div>Neo</div> : <div>Cypher</div> }
 
 
 stories.add('dev tools demo', () => {
@@ -114,12 +119,74 @@ stories.add('Storybook event action example', _ => {
 })
 
 
+stories.add('iteration - forEach', _=> {
+  const persons = ['Peter', 'Paul', 'Mary']
+  return <ul>
+    {persons.forEach(person => <li>{person}</li>)}
+  </ul>
+})
 
-// const fo = true
+stories.add('iteration - map', _=> {
+  const persons = ['Peter', 'Paul', 'Mary']
+  return <ul>
+    {persons.map(person => <li>{person}</li>)}
+  </ul>
+})
 
-// <input value="&lt;3" />  === <input value={'<3'} />
+stories.add('iteration - filter', _=> {
+  const persons = ['Peter', 'Paul', 'Mary']
+  return <ul>
+    {persons.map(person => person.startsWith('M'))}
+  </ul>
+})
 
-// <button disabled /> === <button disabled={true} />
+stories.add('fn comp prop', _ => {
+  const MyCustomElement = ({label}) => <div className="custom">{label}</div>
+  return <MyCustomElement label="spam eggz" />
+})
 
-// const attrs = {title: 'Click this to submit', value: 'Submit'};
-// return <button {...attrs} />
+
+stories.add('fn comp fn prop', _ => {
+  const MyCustomElement = ({label}) => <div className="custom">{label}</div>
+  const fun = _ => {
+    return 'lorem'
+  }
+  return <MyCustomElement label={fun()} />
+})
+
+// <main>
+//   <h1>The Post</h1>
+//   <h2>The author</h2>
+//   <p>The content</p>
+// </main>
+
+// <DashBoard>
+//   <WordClockScreen
+//     hours={time.hours} 
+//     minutes={time.minutes} />
+//   <Map pins={pins} zoomLevel={.4} />
+// </DashBoard>
+
+
+{/*<input value="&lt;3" />  === <input value={'<3'} />*/}
+
+{/*// <button disabled /> === <button disabled={true} />*/}
+
+{/*const attrs = {title: 'Click this to submit', value: 'Submit'};*/}
+{/*return <button {...attrs} />*/}
+
+
+// <MyCustomElement label="Awesome">
+
+// function MyComponents(props) {
+//   const name = props.name
+//   return (
+//     <div className="custom">{label}</div>
+//   )
+// }
+
+// // Less boilerplate:
+
+// const MyCustomElement = ({label}) => {
+//   return <div className="custom">{label}</div>
+// }
