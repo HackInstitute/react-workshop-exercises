@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import {action, storiesOf} from '@storybook/react'
+import {action, setAddon, storiesOf} from '@storybook/react'
+import JSXAddon from 'storybook-addon-jsx'
+
+setAddon(JSXAddon)
 
 const stories = storiesOf('react-basics', module)
 
@@ -21,7 +24,7 @@ const buttonStyle = {
 }
 const Button = ({label}) => <button style={buttonStyle}>{label}</button>
 
-stories.add('Button', _ => {
+stories.addWithJSX('Button', _ => {
   return <Button label="Submit" />
 })
 
@@ -47,16 +50,16 @@ const Panel = ({actions, children, img, title}) => <div style={panelStyle}>
   </div>
 </div>
 
-stories.add('Panel w/ child button', _ => {
+stories.addWithJSX('Panel w/ child button', _ => {
   return <div style={debugContainerStyle}>
     <Panel title="Card title" img="http://via.placeholder.com/311x180">
       <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
       <Button label="Submit" />
     </Panel>  
   </div>
-})
+}, {skip: 1})
 
-stories.add('Panel w/ action buttons', _ => {
+stories.addWithJSX('Panel w/ action buttons', _ => {
   const actions = [
     {label: 'Cancel'},
     {label: 'Save'},
@@ -66,4 +69,4 @@ stories.add('Panel w/ action buttons', _ => {
       <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     </Panel>  
   </div>
-})
+}, {skip: 1})
