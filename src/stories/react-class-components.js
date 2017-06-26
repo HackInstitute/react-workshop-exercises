@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import autoBind from 'react-autobind';
 
@@ -9,85 +10,184 @@ import { linkTo } from '@storybook/addon-links';
 const story = storiesOf('react class components', module);
 
 story.add('Hello world', () => {
-  return (
-    <span>Hello world</span>
-  );
-});
-
-story.add('Render variables', () => {
-  const name = 'Max';
-  return (
-    <span>Hello {name}!</span>
-  );
-});
-
-story.add('Event handler', () => {
-  return (
-    <button onClick={action('Button pressed')}>Button</button>
-  );
-});
-
-story.add('First custom component', () => {
-  const MyButton = () => (
-    <button onClick={action('Button pressed')}>MyButton</button>
-  )
-
-  return (
-    <MyButton />
-  );
-});
-
-story.add('Component with props', () => {
-  const MyButton = (props) => (
-    <button onClick={props.onClick}>{ props.label }</button>
-  )
-
-  return (
-    <MyButton label="Button" onClick={action('Button pressed')} />
-  );
-});
-
-story.add('Component delegate all props', () => {
-  const MyButton = (props) => (
-    <button {...props}>{ props.label }</button>
-  )
-
-  return (
-    <MyButton label="Button" onClick={action('Button pressed')} />
-  );
-});
-
-story.add('Component with children prop', () => {
-  const MyButton = (props) => (
-    <button {...props}>{ props.children }</button>
-  )
-
-  return (
-    <MyButton onClick={action('Button pressed')}>Button</MyButton>
-  );
-});
-
-story.add('Component with state', () => {
-  class Counter extends Component {
-    state = {
-      value: 0,
-    };
-
+  class HelloWorld extends Component {
     render() {
       return (
-        <div>
-          <h1>current counter: { this.state.value }</h1>
-          <button onClick={() => this.setState({ value: this.state.value - 1 })}>-</button>
-          <button onClick={() => this.setState({ value: this.state.value + 1 })}>+</button>
-        </div>
+        <div>Hello world</div>
       );
     }
   }
 
-  return <Counter />
+  return <HelloWorld />;
 });
 
-story.add('Component with state (common format)', () => {
+story.add('Render props', () => {
+  class HelloWorld extends Component {
+    render() {
+      return (
+        <div>Hello {this.props.name || 'world'}!</div>
+      );
+    }
+  }
+
+  return <HelloWorld name="Max" />;
+});
+
+story.add('Render state from member var', () => {
+  class Random extends Component {
+    state = {
+      randomValue: Math.random(),
+    };
+
+    render() {
+      return (
+        <div>Random: {this.state.randomValue}!</div>
+      );
+    }
+  }
+
+  return <Random />;
+});
+
+story.add('Render state from member var with props', () => {
+  const getRandomNumber = (from = 0, to = 1) => {
+    return from + Math.floor(Math.random() * (to - from));
+  }
+
+  class Random extends Component {
+    state = {
+      randomValue: getRandomNumber(this.props.from, this.props.to),
+    };
+
+    render() {
+      return (
+        <div>Random: {this.state.randomValue}!</div>
+      );
+    }
+  }
+
+  return <Random from={10} to={20} />;
+});
+
+story.add('Render state from constructor', () => {
+  const getRandomNumber = (from = 0, to = 1) => {
+    return from + Math.floor(Math.random() * (to - from));
+  }
+
+  class Random extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        randomValue: getRandomNumber(this.props.from, this.props.to),
+      }
+    }
+
+    render() {
+      return (
+        <div>Random: {this.state.randomValue}!</div>
+      );
+    }
+  }
+
+  return <Random from={10} to={20} />;
+});
+
+story.add('Props validation and default values', () => {
+  const getRandomNumber = (from = 0, to = 1) => {
+    return from + Math.floor(Math.random() * (to - from));
+  }
+
+  class Random extends Component {
+    static propTypes = {
+      from: PropTypes.number,
+      to: PropTypes.number,
+    };
+
+    static defaultProps = {
+      from: 10,
+      to: 20,
+    };
+
+    state = {
+      randomValue: getRandomNumber(this.props.from, this.props.to),
+    };
+
+    render() {
+      return (
+        <div>Random: {this.state.randomValue}!</div>
+      );
+    }
+  }
+
+  return <Random />;
+});
+
+story.add('Component with setState(object)', () => {
+  class ToggleButton extends Component {
+    state = {
+      active: false,
+    };
+
+    render() {
+      const { active } = this.state;
+
+      const handler = () => {
+        this.setState({ active: !active });
+      };
+
+      this.x = 12;
+      return (
+        <span
+          style={{
+            padding: 5,
+            border: active ? '1px solid black' : '1px solid gray',
+            color: active ? 'white' : 'black',
+            backgroundColor: active ? 'steelblue' : 'lightgray',
+          }}
+          onClick={handler}
+        >{ this.props.children }</span>
+      )
+    }
+  }
+
+  return (
+    <ToggleButton>Button</ToggleButton>
+  );
+});
+
+story.add('Component with setState(function)', () => {
+  class ToggleButton extends Component {
+    state = {
+      active: false,
+    };
+
+    render() {
+      const { active } = this.state;
+
+      const handler = () => {
+        this.setState((state) => ({ active: !state.active }));
+      };
+
+      return (
+        <span
+          style={{
+            padding: 5,
+            border: active ? '1px solid black' : '1px solid gray',
+            color: active ? 'white' : 'black',
+            backgroundColor: active ? 'steelblue' : 'lightgray',
+          }}
+          onClick={handler}
+        >{ this.props.children }</span>
+      )
+    }
+  }
+
+  return (
+    <ToggleButton>Button</ToggleButton>
+  );
+});
+
+story.add('Component state (Counter example)', () => {
   class Counter extends Component {
     state = {
       value: 0,
@@ -109,12 +209,12 @@ story.add('Component with state (common format)', () => {
   return <Counter />
 });
 
-story.add('Component with auto bind', () => {
+story.add('Component method handler (auto bind)', () => {
   class Counter extends Component {
     constructor(props) {
       super(props);
-      // this.decrement = this.decrement.bind(this);
-      // this.increment = this.increment.bind(this);
+      this.decrement = this.decrement.bind(this);
+      this.increment = this.increment.bind(this);
       autoBind(this);
     }
 
@@ -123,11 +223,13 @@ story.add('Component with auto bind', () => {
     };
 
     decrement() {
-      this.setState(({ value }) => ({ value: value - 1 }));
+      const { value } = this.state;
+      this.setState({ value: value - 1 });
     }
 
     increment() {
-      this.setState(({ value }) => ({ value: value + 1 }));
+      const { value } = this.state;
+      this.setState({ value: value + 1 });
     }
 
     render() {

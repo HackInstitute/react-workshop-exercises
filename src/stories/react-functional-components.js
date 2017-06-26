@@ -9,15 +9,13 @@ import { linkTo } from '@storybook/addon-links';
 const story = storiesOf('react functional components', module);
 
 story.add('Hello world', () => {
-  return (
-    <span>Hello world</span>
-  );
+  return <div>Hello world</div>
 });
 
 story.add('Render variables', () => {
   const name = 'Max';
   return (
-    <span>Hello {name}!</span>
+    <div>Hello {name}!</div>
   );
 });
 
