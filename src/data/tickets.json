@@ -1,0 +1,9 @@
+{
+  "root": {
+    "tickets": {
+      "1":  {"title": "Feature story 1"},
+      "2":  {"title": "Feature story 2"},
+      "3":  {"title": "Feature story 3"}
+    }
+  }
+}

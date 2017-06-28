@@ -3,6 +3,18 @@ import {action, storiesOf} from '@storybook/react'
 
 const stories = storiesOf('Scratch', module)
 
+let Compomat = ({children}) => {
+  console.log('### kids', children)
+  return <div>{children}</div>
+}
+
+stories.add('children', _ => {
+  return <Compomat>
+    <div>A</div>
+    <div>B</div>
+  </Compomat>
+})
+
 stories.add('jsx dyn comp type', _ => {
   const ComponentTypes = {
     heading: 'h1'
