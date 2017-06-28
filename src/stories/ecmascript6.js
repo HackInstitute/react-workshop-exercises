@@ -55,12 +55,12 @@ story.add('var hoisting fehler', () => {
 
   for (var i = 1; i <= 5; i++) {
     lazy.push(function() {
-      console.log('Add', i);
+      action('Add')(i);
       sum += i;
     });
   }
 
-  console.log(lazy);
+  action('lazy')(lazy);
 
   for (var i = 0; i < lazy.length; i++) {
     lazy[i]();

@@ -33,7 +33,7 @@ story.add('Link', () => {
 });
 
 story.add('NavLink', (props) => {
-    console.log('props', props);
+  action('props')(props);
   return (
     <div>
       <NavLink to="/test">Test link</NavLink><br/>

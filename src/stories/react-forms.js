@@ -9,26 +9,148 @@ import { linkTo } from '@storybook/addon-links';
 
 const story = storiesOf('react forms', module);
 
+const cars = [
+  { title: 'Audi', value: 'audi' },
+  { title: 'BMW', value: 'bmw' },
+  { title: 'Mercedes', value: 'mercedes' },
+  { title: 'Mini', value: 'mini' },
+  { title: 'Volkswagen', value: 'volkswagen' },
+];
+
 story.add('Simple form', () => {
   class Form extends Component {
+
+    handleSubmit = (event) => {
+      const form = event.target;
+      const formData = {
+        gender: form.gender.value,
+        name: form.name.value,
+        age: form.age.value,
+        car: form.car.value,
+      };
+
+      action('submit')(JSON.stringify(formData));
+      event.preventDefault();
+    }
+
+    render() {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            <input type="radio" name="gender" value="female" /> Frau
+          </label>
+          <label>
+            <input type="radio" name="gender" value="male" /> Herr
+          </label><br/>
+          <label>
+            Name:
+            <input type="text" name="name" />
+          </label><br/>
+          <label>
+            Age:
+            <input type="text" name="age" />
+          </label><br/>
+          <label>
+            Car:
+            <select name="car">
+              { cars.map(car => <option value={car.value}>{car.title}</option>) }
+            </select>
+          </label><br/>
+          <input type="submit" value="Submit" />
+        </form>
+      );
+    }
+  }
+
+  return <Form />
+});
+
+story.add('Simple form with refs', () => {
+  class Form extends Component {
+
+    handleSubmit = (event) => {
+      const formData = {
+        gender: this.female.checked ? 'female' : this.male.checked ? 'male' : null,
+        name: this.name.value,
+        age: this.age.value,
+        car: this.car.value,
+      };
+
+      action('submit')(JSON.stringify(formData));
+      event.preventDefault();
+    }
+
+    render() {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            <input
+              ref={(female) => { this.female = female; }}
+              type="radio"
+              name="gender"
+              value="female"
+            />
+            Frau
+          </label>
+          <label>
+            <input
+              ref={(male) => { this.male = male; }}
+              type="radio"
+              name="gender"
+              value="male"
+            />
+            Herr
+          </label><br/>
+          <label>
+            Name:
+            <input
+              ref={(name) => { this.name = name; }}
+              type="text"
+              name="name"
+            />
+          </label><br/>
+          <label>
+            Age:
+            <input
+              ref={(age) => { this.age = age; }}
+              type="text"
+              name="age"
+            />
+          </label><br/>
+          <label>
+            Car:
+            <select ref={(car) => { this.car = car; }} name="car">
+              { cars.map(car => <option value={car.value}>{car.title}</option>) }
+            </select>
+          </label><br/>
+          <input type="submit" value="Submit" />
+        </form>
+      );
+    }
+  }
+
+  return <Form />
+});
+
+story.add('Simple form with state', () => {
+  class Form extends Component {
     state = {
-      i: 0,
-      name: '',
-      age: '',
+      name: 'Max',
+      age: '28',
+      car: 'mini',
     };
 
+    /* Keep this to test the difference between value and defaultValue
     componentDidMount() {
       this.timer = setInterval(() => {
-        this.setState(({ i }) => ({ i: i + 1 }));
+        this.forceUpdate();
       }, 1000);
     }
 
     componentWillUnmount() {
-      if (this.timer) {
-        clearInterval(this.timer);
-        this.timer = null;
-      }
+      clearInterval(this.timer);
     }
+    */
 
     handleNameChange = (event) => {
       const value = event.target.value;
@@ -42,6 +164,11 @@ story.add('Simple form', () => {
       this.setState({ age: isNaN(value) ? '' : value.toString() });
     }
 
+    handleCarChange = (event) => {
+      action('car changed')(event.target.value);
+      this.setState({ car: event.target.value });
+    }
+
     handleSubmit = (event) => {
       action('submit')(JSON.stringify(this.state));
       event.preventDefault();
@@ -50,12 +177,12 @@ story.add('Simple form', () => {
     render() {
       return (
         <form onSubmit={this.handleSubmit}>
-          <p>i = { this.state.i }</p>
           <label>
             Name:
             <input
               type="text"
               name="name"
+              value={this.state.name}
               onChange={this.handleNameChange}
             />
           </label><br/>
@@ -68,6 +195,13 @@ story.add('Simple form', () => {
               onChange={this.handleAgeChange}
             />
           </label><br/>
+          <label>
+            Car:
+            <select name="car" value={this.state.car} onChange={this.handleCarChange}>
+              { cars.map(car => <option value={car.value}>{car.title}</option>) }
+            </select>
+          </label><br/>
+
           <input type="submit" value="Submit" />
         </form>
       );
@@ -77,7 +211,7 @@ story.add('Simple form', () => {
   return <Form />
 });
 
-story.add('Simple registration form', () => {
+story.add('Form components with local state', () => {
   class TextInput extends Component {
     state = { value: '' };
 
@@ -128,20 +262,24 @@ story.add('Simple registration form', () => {
   }
 
   class Form extends Component {
-    state = {
-    };
-
     handleSubmit = (event) => {
-      action('submit')(JSON.stringify(this.state));
+      const formData = {
+        // DO NOT DO THIS!
+        // DO NOT ACCESS PRIVATE STATE OF OTHER COMPONENTS THIS WAY.
+        firstname: this.firstname.state.value,
+        lastname: this.lastname.state.value,
+        age: this.age.state.value,
+      }
+      action('submit')(JSON.stringify(formData));
       event.preventDefault();
     }
 
     render() {
       return (
         <form onSubmit={this.handleSubmit}>
-          <TextInput label="Firstname:" /><br/>
-          <TextInput label="Lastname:" /><br/>
-          <NumberInput label="Age:" /><br/>
+          <TextInput label="Firstname:" ref={(firstname) => { this.firstname = firstname; }} /><br/>
+          <TextInput label="Lastname:" ref={(lastname) => { this.lastname = lastname; }} /><br/>
+          <NumberInput label="Age:" ref={(age) => { this.age = age; }} /><br/>
           <input type="submit" value="Submit" />
         </form>
       );
@@ -151,92 +289,7 @@ story.add('Simple registration form', () => {
   return <Form />
 });
 
-story.add('Simple registration form with props', () => {
-  class TextInput extends Component {
-    handleChange = (event) => {
-      this.props.onValueChanged(event.target.value);
-    }
-
-    render() {
-      return (
-        <label>
-          <span style={{ display: 'inline-block', minWidth: '140px' }}>
-            { this.props.label }
-          </span>
-          <input
-            type="text"
-            name={ this.props.name }
-            value={ this.props.value }
-            onChange={ this.handleChange }
-          />
-        </label>
-      )
-    }
-  }
-
-  class NumberInput extends Component {
-    handleChange = (event) => {
-      const value = parseInt(event.target.value);
-      this.props.onValueChanged(isNaN(value) ? '' : value.toString());
-    }
-
-    render() {
-      return (
-        <label>
-          <span style={{ display: 'inline-block', minWidth: '140px' }}>
-            { this.props.label }
-          </span>
-          <input
-            type="text"
-            name={ this.props.name }
-            value={ this.props.value }
-            onChange={ this.handleChange }
-          />
-        </label>
-      )
-    }
-  }
-
-  class Form extends Component {
-    state = {
-      firstname: '',
-      lastname: '',
-      age: '',
-    };
-
-    handleSubmit = (event) => {
-      action('submit')(JSON.stringify(this.state));
-      event.preventDefault();
-    }
-
-    render() {
-      return (
-        <form onSubmit={this.handleSubmit}>
-          <TextInput
-            label="Firstname:"
-            value={this.state.firstname}
-            onValueChanged={(firstname) => this.setState({ firstname })}
-          /><br/>
-          <TextInput
-            label="Lastname:"
-            value={this.state.lastname}
-            onValueChanged={(lastname) => this.setState({ lastname })}
-          /><br/>
-          <NumberInput
-            label="Age:"
-            value={this.state.age}
-            onValueChanged={(age) => this.setState({ age })}
-          /><br/>
-          <input type="submit" value="Submit" />
-        </form>
-      );
-    }
-  }
-
-  return <Form />
-});
-
-story.add('Simple contact form', () => {
+story.add('Form components with props delegation', () => {
   class TextInput extends Component {
     render() {
       return (
