@@ -3,11 +3,10 @@ import React, {Component} from 'react'
 // Components
 export const TicketList = ({tickets, onDeleteTicket}) => <table>
   <tbody>
-    {tickets.map(({id, title}) => (
+    {Object.keys(tickets).map(id => (
       <tr key={id}>
         <td>#{id}</td>
-        <td>{title}</td>
-        {/*<td><small>edit</small></td>*/}
+        <td>{tickets[id].title}</td>
         <td><button onClick={_ => onDeleteTicket(id)}>Delete</button></td>
       </tr>
     ))}
@@ -41,7 +40,8 @@ export class TicketEntry extends Component {
       <input type='text'
         value={title}
         onChange={this.handleChange}
-        onKeyPress={this.handleKeyPress} />
+        onKeyPress={this.handleKeyPress}
+        autoFocus />
     </p>
   }
 }

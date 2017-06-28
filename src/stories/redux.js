@@ -52,11 +52,10 @@ stories.addWithJSX('React redux - Ticket list', _ => {
   // Components
   let TicketList = ({tickets, onDeleteTicket}) => <table>
     <tbody>
-      {tickets.map(({id, title}) => (
+      {Object.keys(tickets).map(id => (
         <tr key={id}>
           <td>#{id}</td>
-          <td>{title}</td>
-          {/*<td><small>edit</small></td>*/}
+          <td>{tickets[id].title}</td>
           <td><button onClick={_ => onDeleteTicket(id)}>Delete</button></td>
         </tr>
       ))}
@@ -102,13 +101,19 @@ stories.addWithJSX('React redux - Ticket list', _ => {
  * React-redux - async & remote
  */
 import {TicketEntry, TicketList} from '../components'
+import * as remoteStore from '../store/remoteTicketStore'
 
 stories.addWithJSX('React redux - Async/Remote Ticket list', _ => {
+  const {default: store, ticketActionCreators} = remoteStore
+
   // App
-  let App = ({addTicket, deleteTicket, tickets}) => {
+  let App = ({addTicket, deleteTicket, fetchTickets, tickets}) => {
     return <div>
       <TicketEntry onAddTicket={addTicket} />
       <hr />
+      <p onClick={fetchTickets}>
+        <button>Reload</button>
+      </p>
       <TicketList tickets={tickets} onDeleteTicket={deleteTicket} />
     </div>
   }
@@ -116,5 +121,9 @@ stories.addWithJSX('React redux - Async/Remote Ticket list', _ => {
     state => ({tickets: state.tickets}),
     dispatch => bindActionCreators(ticketActionCreators, dispatch)
   )(App)
+
+  // Kick off
+  store.dispatch(ticketActionCreators.fetchTickets())
+  
   return <Provider store={store}><App /></Provider>
 }, {skip: 1})

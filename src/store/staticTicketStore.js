@@ -11,24 +11,29 @@ const Type = {
 
 // Action creators
 export const ticketActionCreators = {
-  addTicket: title => ({type: Type.ADD, payload: title}),
-  deleteTicket: id => ({type: Type.DELETE, payload: id})
+  addTicket: title => ({type: Type.ADD, payload: {title}}),
+  deleteTicket: id => ({type: Type.DELETE, payload: {id}})
 }
 
 // Reducer
 const reducer = (state, action) => {
   switch (action.type) {
     case Type.ADD:
-      return {tickets: [...state.tickets, {id: uid++, title: action.payload}]}
+      var {title} = action.payload
+      var tickets = {...state.tickets, [uid++]: {title}}
+      return {...state, tickets}
     case Type.DELETE:
-      return {tickets: state.tickets.filter(ticket => ticket.id !== action.payload)}
+      var {id} = action.payload
+      var tickets = {...state.tickets}
+      delete tickets[id]
+      return {...state, tickets}
     default:
       return state
   }
 }
 
 // Initial state
-const initialState = {tickets: [{id: uid++, title: 'fix the internet'}]}
+const initialState = {tickets: {[uid++]: {title: 'fix the internet'}}}
 
 // Create & export the store
 export default createStore(
