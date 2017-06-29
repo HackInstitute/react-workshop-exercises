@@ -3,6 +3,8 @@ import {action, storiesOf} from '@storybook/react'
 
 const stories = storiesOf('Scratch', module)
 
+stories.add('Checko', _ => {})
+
 let Compomat = ({children}) => {
   console.log('### kids', children)
   return <div>{children}</div>

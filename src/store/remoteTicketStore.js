@@ -12,7 +12,7 @@ const Type = {
 }
 
 // Action creators
-export const ticketActionCreators = {
+export const actionCreators = {
   addTicket: title => dispatch => {
     fetch(`${baseUri}/root/tickets.json`, {method: 'POST', body: JSON.stringify({title})})
       .then(res => res.json())

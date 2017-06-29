@@ -32,7 +32,7 @@ stories.addWithJSX('Solo redux', _ => {
 /**
  * React-redux
  */
-import store, {ticketActionCreators} from '../store/staticTicketStore'
+import store, {actionCreators} from '../store/staticTicketStore'
 // stories.addDecorator(storyFn => <Provider store={store}>{storyFn()}</Provider>)
 
 stories.addWithJSX('React redux - Ticket list', _ => {
@@ -46,7 +46,7 @@ stories.addWithJSX('React redux - Ticket list', _ => {
   }
   App = connect(
     state => ({tickets: state.tickets}),
-    dispatch => bindActionCreators(ticketActionCreators, dispatch)
+    dispatch => bindActionCreators(actionCreators, dispatch)
   )(App)
 
   // Components
@@ -101,12 +101,9 @@ stories.addWithJSX('React redux - Ticket list', _ => {
  * React-redux - async & remote
  */
 import {TicketEntry, TicketList} from '../components'
-import * as remoteStore from '../store/remoteTicketStore'
+import remoteStore, {actionCreators as remoteActionCreators} from '../store/remoteTicketStore'
 
 stories.addWithJSX('React redux - Async/Remote Ticket list', _ => {
-  const {default: store, ticketActionCreators} = remoteStore
-
-  // App
   let App = ({addTicket, deleteTicket, fetchTickets, tickets}) => {
     return <div>
       <TicketEntry onAddTicket={addTicket} />
@@ -119,11 +116,11 @@ stories.addWithJSX('React redux - Async/Remote Ticket list', _ => {
   }
   App = connect(
     state => ({tickets: state.tickets}),
-    dispatch => bindActionCreators(ticketActionCreators, dispatch)
+    dispatch => bindActionCreators(remoteActionCreators, dispatch)
   )(App)
 
   // Kick off
-  store.dispatch(ticketActionCreators.fetchTickets())
+  remoteStore.dispatch(remoteActionCreators.fetchTickets())
   
-  return <Provider store={store}><App /></Provider>
+  return <Provider store={remoteStore}><App /></Provider>
 }, {skip: 1})

@@ -10,7 +10,7 @@ const Type = {
 }
 
 // Action creators
-export const ticketActionCreators = {
+export const actionCreators = {
   addTicket: title => ({type: Type.ADD, payload: {title}}),
   deleteTicket: id => ({type: Type.DELETE, payload: {id}})
 }
