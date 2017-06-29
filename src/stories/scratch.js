@@ -3,7 +3,9 @@ import {action, storiesOf} from '@storybook/react'
 
 const stories = storiesOf('Scratch', module)
 
-stories.add('Checko', _ => {})
+stories.add('Checko', _ => {
+  
+})
 
 let Compomat = ({children}) => {
   console.log('### kids', children)
@@ -34,12 +36,12 @@ stories.add('jsx dyn el type', _ => {
 })
 
 stories.add('jsx spread', _ => {
-  const attrs = {title: 'Click this to submit', value: 'Submit', type: 'button'};
+  const attrs = {title: 'Click this to submit', value: 'Submit', type: 'button'}
   return <input {...attrs} />
 })
 
 stories.add('css', _ => {
-  const attrs = {title: 'Click this to submit', value: 'Submit', type: 'button'};
+  const attrs = {title: 'Click this to submit', value: 'Submit', type: 'button'}
   return <div>
     <style>{'.red { color: red }'}</style>
     <button className="red">redomato</button>
@@ -111,11 +113,11 @@ stories.add('fn comp fn prop', _ => {
 // </DashBoard>
 
 
-{/*<input value="&lt;3" />  === <input value={'<3'} />*/}
+{/*<input value="&lt3" />  === <input value={'<3'} />*/}
 
 {/*// <button disabled /> === <button disabled={true} />*/}
 
-{/*const attrs = {title: 'Click this to submit', value: 'Submit'};*/}
+{/*const attrs = {title: 'Click this to submit', value: 'Submit'}*/}
 {/*return <button {...attrs} />*/}
 
 
@@ -180,7 +182,7 @@ class SomeComponent extends React.Component {
 //       React.createElement("li", null, "Another item")
 //     )
 //   )
-// );
+// )
 
 {/*<MyComponents.DatePicker color="blue" />*/}
 // React.createElement(arguments)
@@ -207,3 +209,166 @@ stories.add('createEl', _ => {
   const name = 'world'
   return React.createElement('div', {name}, `Heyho ${name}`)
 })
+
+
+
+// {
+//   tickets: {
+//     1: {...},
+//     2: {...},
+//     3: {...},
+//   },
+//   users: {
+//     1: {...},
+//     2: {...},
+//     3: {...},
+//   },
+//   messages: {
+//     1: {...},
+//     2: {...},
+//     3: {...},
+//   }
+// }
+
+
+// const reducer = (state, action) => {
+//   switch (action.type) {
+//     case ADD_USER:
+//       ...
+//       return ...
+//     case ADD_TICKET:
+//       ...
+//       return ...
+//     case ADD_MESSAGE:
+//       ...
+//       return ...
+//     default:
+//       return state
+//   }
+// }
+
+
+// const userReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case ADD_USER: 
+//       return ...
+//     ...
+//   }
+// }
+
+// const ticketReducer = (state = {1: {title: 'Fix the internet'}}, action) => {
+//   switch (action.type) {
+//     case ADD_TICKET: 
+//       return ...
+//     ...
+//   }
+// }
+
+// const store = createStore(combineReducers({users: userReducer, tickets: ticketReducer}))
+// store.getState() // {users: {}, tickets: {1: {title: 'Fix the internet'}
+
+
+
+// import {createSelector} from 'reselect'
+
+// const shopItemsSelector = state => state.shop.items
+// const taxPercentSelector = state => state.shop.taxPercent
+
+// const subtotalSelector = createSelector(
+//   shopItemsSelector,
+//   items => items.reduce((acc, item) => acc + item.value, 0)
+// )
+
+// const taxSelector = createSelector(
+//   subtotalSelector,
+//   taxPercentSelector,
+//   (subtotal, taxPercent) => subtotal * (taxPercent / 100)
+// )
+
+// export const totalSelector = createSelector(
+//   subtotalSelector,
+//   taxSelector,
+//   (subtotal, tax) => ({ total: subtotal + tax })
+// )
+
+// let exampleState = {
+//   shop: {
+//     taxPercent: 8,
+//     items: [
+//       { name: 'apple', value: 1.20 },
+//       { name: 'orange', value: 0.95 },
+//     ]
+//   }
+// }
+
+// console.log(subtotalSelector(exampleState)) // 2.15
+// console.log(taxSelector(exampleState))      // 0.172
+// console.log(totalSelector(exampleState))    // { total: 2.322 }
+
+
+// /actions
+// /constants
+// /reducers
+// /middleware
+// /containers
+// /components
+// app.js
+
+
+// /estimates
+// /tickets
+//   /actions
+//   /components
+//   /reducers
+//   /views
+//   /...
+// /users
+// /common
+// app.js
+
+// /components
+// /services
+//   api.js
+//   notification.js
+// /views
+// /ducks
+//   estimates.js
+//   users.js
+//   tickets.js
+//   store.js
+// /components
+// app.js
+
+
+// // actions.js
+// export function loadFoo(id) {
+//   return {
+//     type: LOAD_FOO,
+//     promise: Api.getFoo(id),
+//     meta: {
+//       onSuccess: (response) => logSuccess(response)
+//     }
+//   }
+// }
+
+// // reducer.js
+// import { handle } from 'redux-pack'
+
+// export function fooReducer(state = initialState, action) {
+//   const { type, payload } = action
+//   switch (type) {
+//     case LOAD_FOO:
+//       return handle(state, action, {
+//         start: prevState => ({
+//           ...prevState,
+//           isLoading: true,
+//           fooError: null
+//         }),
+//         finish: prevState => ({ ...prevState, isLoading: false }),
+//         failure: prevState => ({ ...prevState, fooError: payload }),
+//         success: prevState => ({ ...prevState, foo: payload }),
+//       })
+//     default:
+//       return state
+//   }
+// }
