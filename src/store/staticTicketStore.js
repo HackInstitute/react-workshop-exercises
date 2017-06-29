@@ -39,5 +39,5 @@ const initialState = {tickets: {[uid++]: {title: 'fix the internet'}}}
 export default createStore(
   reducer,
   initialState, 
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__()
 )

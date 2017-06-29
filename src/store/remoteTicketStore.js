@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux'
+import {applyMiddleware, compose, createStore} from 'redux'
 import thunk from 'redux-thunk'
 
 const baseUri = 'https://react-workshop-e6209.firebaseio.com'
@@ -61,7 +61,9 @@ const initialState = {tickets: {}}
 // Create & export the store
 export default createStore(
   reducer,
-  initialState, 
-  applyMiddleware(thunk)
-  // applyMiddleware(thunk, window.__REDUX_DEVTOOLS_EXTENSION__())
+  initialState,
+  compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__()
+  ) 
 )

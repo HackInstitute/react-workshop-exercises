@@ -107,10 +107,10 @@ stories.addWithJSX('React redux - Async/Remote Ticket list', _ => {
   let App = ({addTicket, deleteTicket, fetchTickets, tickets}) => {
     return <div>
       <TicketEntry onAddTicket={addTicket} />
-      <hr />
-      <p onClick={fetchTickets}>
-        <button>Reload</button>
+      <p>
+        <button onClick={fetchTickets}>Reload tickets</button>
       </p>
+      <hr />
       <TicketList tickets={tickets} onDeleteTicket={deleteTicket} />
     </div>
   }
