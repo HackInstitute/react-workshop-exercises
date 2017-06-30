@@ -6,7 +6,7 @@ import {connect, Provider} from 'react-redux'
  * Storybook setup
  */
 import {storiesOf} from '@storybook/react'
-const stories = storiesOf('Redux - Basics', module)
+const stories = storiesOf('Redux', module)
 
 /**
  * Solo redux - only use plain JS/DOM & redux to update a counter

@@ -1,0 +1,29 @@
+body {
+  font-family: sans-serif;
+  color: #555;
+}
+
+.btn {
+  border: 1px solid gray;
+  border-radius: 3px;
+  background-color: silver;
+  color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.btn--large {
+  padding: 30px;
+  font-size: 20px;
+}
+.btn--warning {
+  background-color: tomato;
+  border: 5px solid red;
+}
+.btn:hover {
+  border-color: yellowgreen;
+  animation: .2s ease-out TheTotalTransition;
+}
+@keyframes TheTotalTransition {
+  from { margin: -1% -10%; }
+  to { margin: 0; }
+}

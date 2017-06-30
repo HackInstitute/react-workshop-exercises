@@ -7,6 +7,10 @@ import {storiesOf} from '@storybook/react'
 const stories = storiesOf('Async JS', module)
 
 stories.add('Promises', _ => {
+  fetch('https://randomuser.me/api/')
+    .then(res => res.json())
+    .then(console.log)
+    .catch(console.error)
   return <div>Check console output</div>
 })
 
@@ -20,6 +24,7 @@ stories.add('async', _ => {
       const data = await fetchData()
       const json = await data.json()
       console.log(json)
+      // console.log('###', await (await fetchData()).json())
     } catch(e) {
       console.error("Problem", e)
     }
