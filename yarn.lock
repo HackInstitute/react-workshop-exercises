@@ -4636,6 +4636,10 @@ normalize-url@^1.4.0:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
+normalize.css@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-6.0.0.tgz#22188c2707c911fb3ad3c1aac0677ff68661bea8"
+
 npmlog@^4.0.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-4.1.2.tgz#08a7f2a8bf734604779a9efa4ad5cc717abb954b"
@@ -6433,6 +6437,12 @@ style-loader@0.17.0, style-loader@^0.17.0:
   resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.17.0.tgz#e8254bccdb7af74bd58274e36107b4d5ab4df310"
   dependencies:
     loader-utils "^1.0.2"
+
+suitcss-base@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/suitcss-base/-/suitcss-base-3.0.0.tgz#83dd53629c37adbdeac11ef6439a7f2ed955f05e"
+  dependencies:
+    normalize.css "^6.0.0"
 
 supports-color@^2.0.0:
   version "2.0.0"

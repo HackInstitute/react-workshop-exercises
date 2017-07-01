@@ -107,5 +107,11 @@ stories.addWithJSX('className attr - var w/ classnames', _ => {
  */
 import './styles.css'
 stories.addWithJSX('importing actual css', _ => {
-  return <div className="btn btn--large btn--warning">The `className` attr</div>
+  const isLarge = true,
+        isWarning = true
+  const btnClass = cn('btn', {
+    'btn--large': isLarge, 
+    'btn--warning': isWarning
+  })
+  return <div className={btnClass}>The `className` attr</div>
 })

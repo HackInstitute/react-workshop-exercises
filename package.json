@@ -12,7 +12,8 @@
     "redux": "^3.7.1",
     "redux-thunk": "^2.2.0",
     "storybook": "^0.0.0",
-    "storybook-router": "^0.2.7"
+    "storybook-router": "^0.2.7",
+    "suitcss-base": "^3.0.0"
   },
   "devDependencies": {
     "@storybook/react": "^3.1.3",
