@@ -79,7 +79,6 @@ stories.addWithJSX('className attr - var', _ => {
   </div>
 })
 
-
 /**
  * className attr - var, but with `classnames`
  */

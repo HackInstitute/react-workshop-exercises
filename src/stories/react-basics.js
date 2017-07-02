@@ -6,10 +6,16 @@ import JSXAddon from 'storybook-addon-jsx'
 setAddon(JSXAddon)
 
 const stories = storiesOf('react-basics', module)
-const debugContainerStyle = {backgroundColor: '#f3f3f3', padding: '10px', maxWidth: '313px' }
-stories.addDecorator(storyFn => <div style={debugContainerStyle}>{storyFn()}</div>)
+
+/* JSX ******************************************************************/
+
+// ...
+
+
 
 /* Nesting & composition ******************************************************************/
+const debugContainerStyle = {backgroundColor: '#f3f3f3', padding: '10px', maxWidth: '313px' }
+stories.addDecorator(storyFn => <div style={debugContainerStyle}>{storyFn()}</div>)
 
 /**
  * Button component
