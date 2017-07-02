@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PureComponent } from 'react';
 
 import autoBind from 'react-autobind';
 
@@ -92,36 +91,6 @@ story.add('Render state from constructor', () => {
   return <Random from={10} to={20} />;
 });
 
-story.add('Props validation and default values', () => {
-  const getRandomNumber = (from = 0, to = 1) => {
-    return from + Math.floor(Math.random() * (to - from));
-  }
-
-  class Random extends Component {
-    static propTypes = {
-      from: PropTypes.number,
-      to: PropTypes.number,
-    };
-
-    static defaultProps = {
-      from: 10,
-      to: 20,
-    };
-
-    state = {
-      randomValue: getRandomNumber(this.props.from, this.props.to),
-    };
-
-    render() {
-      return (
-        <div>Random: {this.state.randomValue}!</div>
-      );
-    }
-  }
-
-  return <Random />;
-});
-
 story.add('Component with setState(object)', () => {
   class ToggleButton extends Component {
     state = {
@@ -209,7 +178,46 @@ story.add('Component state (Counter example)', () => {
   return <Counter />
 });
 
-story.add('Component method handler (auto bind)', () => {
+story.add('Component method handler with impl binding', () => {
+  class Counter extends Component {
+    constructor(props) {
+      super(props);
+      this.decrement = this.decrement.bind(this);
+      this.increment = this.increment.bind(this);
+      autoBind(this);
+    }
+
+    state = {
+      value: 0,
+    };
+
+    decrement = () => {
+      const { value } = this.state;
+      this.setState({ value: value - 1 });
+    }
+
+    increment = () => {
+      const { value } = this.state;
+      this.setState({ value: value + 1 });
+    }
+
+    render() {
+      const { value } = this.state;
+
+      return (
+        <div>
+          <h1>current counter: { value }</h1>
+          <button onClick={this.decrement}>-</button>
+          <button onClick={this.increment}>+</button>
+        </div>
+      );
+    }
+  }
+
+  return <Counter />
+});
+
+story.add('Component method handler (bind / auto bind)', () => {
   class Counter extends Component {
     constructor(props) {
       super(props);
@@ -246,4 +254,98 @@ story.add('Component method handler (auto bind)', () => {
   }
 
   return <Counter />
+});
+
+story.add('Component lifecycle', () => {
+  class Clock extends Component {
+    state = {
+      time: new Date(),
+    };
+
+    componentDidMount() {
+      this.timer = setInterval(this.tick, 100);
+    }
+
+    componentWillUnmount() {
+      if (this.timer) {
+        clearInterval(this.timer);
+        this.timer = null;
+      }
+    }
+
+    tick = () => {
+      this.setState({ time: new Date() });
+    }
+
+    render() {
+      const { time } = this.state;
+
+      const displayTime = [
+        time.getHours(),
+        time.getMinutes(),
+        time.getSeconds(),
+      ].map(x => `${x < 10 ? '0' : ''}${x}`).join(':');
+
+      action('render')(displayTime);
+
+      return <h1>It is { displayTime } o'clock.</h1>;
+    }
+  }
+
+  return <Clock />
+});
+
+story.add('Component lifecycle 2', () => {
+  class ClockTick extends Component {
+    state = {
+      time: new Date(),
+    };
+
+    componentDidMount() {
+      this.timer = setInterval(this.tick, 100);
+    }
+
+    componentWillUnmount() {
+      if (this.timer) {
+        clearInterval(this.timer);
+        this.timer = null;
+      }
+    }
+
+    tick = () => {
+      this.setState({ time: new Date() });
+    }
+
+    render() {
+      return <TextClock time={this.state.time} />
+    }
+  }
+
+  class TextClock extends Component {
+    shouldComponentUpdate(nextProps) {
+      action('shouldComponentUpdate')(nextProps);
+      const currTime = this.props.time;
+      const nextTime = nextProps.time;
+
+      return currTime.getHours() != nextTime.getHours() ||
+          currTime.getMinutes() != nextTime.getMinutes() ||
+          currTime.getSeconds() != nextTime.getSeconds();
+    }
+
+    render() {
+      const { time } = this.props;
+
+      const displayTime = [
+        time.getHours(),
+        time.getMinutes(),
+        time.getSeconds(),
+      ].map(x => `${x < 10 ? '0' : ''}${x}`).join(':');
+
+      action('render')(displayTime);
+
+      return <h1>It is { displayTime } o'clock.</h1>;
+    }
+  }
+
+  return <ClockTick />
 });

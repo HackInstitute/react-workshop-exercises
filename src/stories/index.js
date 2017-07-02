@@ -5,6 +5,7 @@ require('./ecmascript6');
 require('./react-basics');
 require('./react-class-components');
 require('./react-forms');
+require('./react-proptypes');
 require('./async');
 require('./redux');
 require('./react-router');

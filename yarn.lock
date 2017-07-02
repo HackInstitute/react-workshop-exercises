@@ -6308,9 +6308,9 @@ storybook-addon-jsx@^4.1.1:
     react-copy-to-clipboard "4.3.1"
     react-element-to-jsx-string "10.1.0"
 
-storybook-router@^0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/storybook-router/-/storybook-router-0.2.7.tgz#91b1a2748eb8fede11745e0a5e68a97a2c0c5052"
+storybook-router@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/storybook-router/-/storybook-router-0.2.8.tgz#b924acdbf734a3020ed206fc054fadca6d805140"
   dependencies:
     "@storybook/addon-actions" "^3.0.0"
     prop-types "^15.5.10"
