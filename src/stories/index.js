@@ -10,5 +10,6 @@ require('./async');
 require('./redux');
 require('./react-router');
 require('./css');
+require('./components');
 
 require('./scratch')
