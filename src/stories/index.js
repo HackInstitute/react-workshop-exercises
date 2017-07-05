@@ -11,4 +11,6 @@ require('./redux');
 require('./react-router');
 require('./css');
 
+require('./ecmascript6-casio')
+
 require('./scratch')

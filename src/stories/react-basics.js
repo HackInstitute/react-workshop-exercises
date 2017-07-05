@@ -9,7 +9,12 @@ const stories = storiesOf('react-basics', module)
 
 /* JSX ******************************************************************/
 
-// ...
+stories.add('css exmple', _ => {
+  return <div>
+    <style>{' .foo {color: red}'}</style>
+    <div className="foo"></div>
+  </div>
+})
 
 
 
@@ -30,11 +35,34 @@ const buttonStyle = {
   padding: '10px',
   marginRight: '2px'
 }
-const Button = ({label}) => <button style={buttonStyle}>{label}</button>
+const Button = ({onClick, label, style}) => <button
+  onClick={onClick} 
+  style={{...buttonStyle, ...style}}>{label}
+</button>
 
 stories.addWithJSX('Button', _ => {
-  return <Button label="Submit" />
+  return <Button onClick={action('CLICKOMAT')} label="Submit" />
+  // const handle = function(e) {
+  //   console.log('###', this)
+  // }
+
+  // const btn = document.createElement('button')
+  // btn.innerText = 'SUBMITTO'
+  // document.body.appendChild(btn)
+  
+  // setTimeout(function() {
+  //   btn.addEventListener('click', handle)
+  // }, 500);
+
+  // return <button onClick={handle}>clicko</button>
 })
+
+
+
+
+
+
+
 
 
 /**

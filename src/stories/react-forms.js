@@ -16,6 +16,70 @@ const cars = [
   { title: 'Volkswagen', value: 'volkswagen' },
 ];
 
+
+story.add('ctrl comp', _ => {
+  class Input extends Component {
+    state = {value: ''}
+    handleInput = (e) => {
+      const {value} = e.target
+      this.setState({value})
+    }
+    render() {
+      const {value} = this.state
+      return <input value={value} onChange={this.handleInput} />
+    }
+  }
+  return <div>
+    CTRL
+    <Input />
+  </div>
+})
+
+story.add('ctrl sel', _ => {
+  const cars = [
+    {manu: 'BMW', model: '318'},
+    {manu: 'BMW', model: '320'},
+    {manu: 'BMW', model: 'Mini'},
+    {manu: 'Daimler', model: 'A'},
+    {manu: 'Daimler', model: 'B'},
+    {manu: 'Daimler', model: 'C'},
+  ]
+
+  const CarSelector = ({children})=> {
+    return <div>
+      <Select options={cars} targetAttr="model" />
+      <Select options={cars} targetAttr="model" />
+    </div>
+  }
+
+  class Select extends Component {
+    state = {value: '', options: []}
+
+    handleChange = (e) => {
+      const {value} = e.target
+      this.setState({value})
+    }
+
+    renderOpt = (option) => {
+      const val = option[this.props.targetAttr]
+      return <option key={val} value={val}>{val}</option>
+    }
+
+    render() {
+      const {value} = this.state
+      const {options, targetAttr} = this.props
+      return <select onChange={this.handleChange} value={value}>
+        {options.map(this.renderOpt)}
+      </select>
+    }
+  }
+  return <div>
+    <CarSelector />
+  </div>
+})
+
+
+
 story.add('Simple form', () => {
   class Form extends Component {
 

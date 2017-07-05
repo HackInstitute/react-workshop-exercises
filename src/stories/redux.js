@@ -32,9 +32,9 @@ stories.addWithJSX('Solo redux', _ => {
 /**
  * React-redux
  */
-import store, {actionCreators} from '../store/staticTicketStore'
 // stories.addDecorator(storyFn => <Provider store={store}>{storyFn()}</Provider>)
 
+import store, {actionCreators} from '../store/staticTicketStore'
 stories.addWithJSX('React redux - Ticket list', _ => {
   // App
   let App = ({addTicket, deleteTicket, tickets}) => {

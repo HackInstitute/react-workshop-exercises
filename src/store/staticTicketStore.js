@@ -12,7 +12,8 @@ const Type = {
 // Action creators
 export const actionCreators = {
   addTicket: title => ({type: Type.ADD, payload: {title}}),
-  deleteTicket: id => ({type: Type.DELETE, payload: {id}})
+  deleteTicket: id => ({type: Type.DELETE, payload: {id}}),
+  cancelTicket: id => ({type: Type.DELETE, payload: {id}}),
 }
 
 // Reducer
